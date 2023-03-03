@@ -17,10 +17,9 @@ from datetime import datetime
 from django.core.paginator import Paginator
 import io
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
-from django.contrib.auth.forms import PasswordChangeForm
+
 from django.contrib.auth import update_session_auth_hash
-from django.contrib import messages
+
 
 
 # Create a custom form for user signup that includes an email field
@@ -108,7 +107,7 @@ def dashboard(request):
         credit = Credit.objects.get(user=user)
         Data.objects.filter(user=request.user).delete()
         return render(request, 'dashboard/index.html', {
-        'user': capitalize(request.user),
+        'user': request.user,
         'id': number_user,
         'search': search_count,
         'data': data_count,
