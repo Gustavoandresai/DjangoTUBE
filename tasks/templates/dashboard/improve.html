@@ -41,6 +41,14 @@ class="min-w-0 p-4 text-white bg-green-600 rounded-lg shadow-xs"
             <option>{{ dato.title }} </option>
           {% endfor %}
         </select>
+        <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+          <select id="language" type="text" name="language" required
+          class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+        >
+          <option>English</option>
+          <option>Spanish</option>
+        </select>
+        </label>
         <br>
         <center>
           <button class="ml-auto flex items-right justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" >
@@ -63,6 +71,14 @@ class="min-w-0 p-4 text-white bg-green-600 rounded-lg shadow-xs"
             class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
             placeholder="Title" id="title" type="title" name="title" required
           />
+        </label>
+        <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+          <select id="language" type="text" name="language" required
+          class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+        >
+          <option>English</option>
+          <option>Spanish</option>
+        </select>
         </label>
         <br>
         <center>

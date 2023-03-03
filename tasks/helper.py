@@ -8,12 +8,12 @@ from django.contrib.auth.models import User
 from tasks import config
 
 
-def title_improve(title):
+def title_improve(title, language):
     # Inicializa la API de OpenAI
     openai.api_key = config.your_api_key
     # Define los argumentos que deseas usar para la generación de texto
-    prompt = (f"Genera un título  Mejorado y adaptado al marketing CEO en el idioma y inspirado del titulo: {title}."
-              "Tu respuesta sera un titulo mas creativo, llamativo y atractivo  que el original. El titulo debe ser diferente ya que sera mucho mejor. SOLO RESPONDERAS CON EL TITULO MEJORADO")
+    prompt = (f"I want you to respond only in language {language}, Generate a title Improved and adapted to SEO marketing and inspired by the title: {title}."
+              "Your answer would be a more creative, striking and attractive title than the original. The title should be different as it will be much better. the video title has to be  better and catchy no more than 70 characters.")
 
     # Llama a la API de OpenAI
     completions = openai.Completion.create(
@@ -24,28 +24,30 @@ def title_improve(title):
         stop=None,
         temperature=0.5,
     )
-    # Obtén el título generado por la API
+    # Get de api title
     nuevo_titulo = completions.choices[0].text
 
-    # Imprime el título generado
+    # title
     return (nuevo_titulo)
 
 
-def improve_title(df):
+def improve_title(df, language):
     df = df.sort_values(by='View Count:', ascending=False)
+    # Top 3 title with more views for the inspiration
     top_n = df.head(3)
     titles = top_n['Title']
     titulos = titles.tolist()
+    # inspire by title random
     random_titles = df.sample(n=3)
     titles2 = random_titles['Title']
     titles_random = titles2.tolist()
 # Inicializa la API de OpenAI
     openai.api_key = "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"
     # Define los argumentos que deseas usar para la generación de texto
-    prompt = (f"Generar un título  inspirado en los siguientes tres títulos: {titulos[0]}, {titulos[1]}, {titulos[2]}."
-              "El título debe ser mejor; más impactante, creativo, llamativo y atractivo  que los títulos originales. Tambien debes incluir las mejores palabras claves de los titulos orinales")
-    prompt2 = (f"Generar un título  inspirado en los siguientes tres títulos: {titles_random[0]}, {titles_random[1]}, {titles_random[2]}."
-               "Genera el titulo mucho mejor atractivo y que llame la atencion")
+    prompt = (f"I want you to respond only in language {language}, be inspired by the following titles and make the words dramatic based on: {titulos[0]}, {titulos[1]}, {titulos[2]}."
+            "take on the role of professional copywriter and YouTube video content creator And make the title compelling and captivating, the video title has to be different, better and catchy no more than 70 characters.")
+    prompt2 = (f"I want you to respond only in language {language}, be inspired by the following titles and make the words dramatic based on: {titles_random[0]}, {titles_random[1]}, {titles_random[2]}."
+            "take on the role of professional copywriter and YouTube video content creator And make the title compelling and captivating, the video title has to be catchy no more than 70 characters.")
     # Llama a la API de OpenAI
     completions = openai.Completion.create(
         engine="text-davinci-003",
@@ -117,7 +119,6 @@ def chart(df):
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)'
     )
-    fig4.write_html('pie_chart.html', full_html=False)
     chart = fig4.to_html()
     return chart
 
@@ -128,7 +129,6 @@ def chart2(df):
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)'
     )
-    fig.write_html('pie_chart.html', full_html=False)
     chart2 = fig.to_html()
     return chart2
 
@@ -139,7 +139,6 @@ def chart3(df, dictionary):
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)'
     )
-    fig3.write_html('pie_chart.html', full_html=False)
     chart3 = fig3.to_html()
     return chart3
 
@@ -150,7 +149,6 @@ def chart4(df, dictionary2):
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)'
     )
-    fig4.write_html('pie_chart.html', full_html=False)
     chart4 = fig4.to_html()
     return chart4
 

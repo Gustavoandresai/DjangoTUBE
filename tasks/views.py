@@ -196,7 +196,7 @@ def improve(request):
         # Get a list of unique values in the "search" field of the "Data" model, along with the number of times each value appears.
             title = Data.objects.values('title').filter(user=request.user)
             old_title = str(request.POST['title'])
-            new_title = helper.title_improve(old_title)
+            new_title = helper.title_improve(old_title, request.POST['language'])
             new_credits = helper.value_credits(request, 5) # we subtract the credits
             # Render the "data.html" template, passing in the logged-in user and the search data for that user.
             return render(request, 'dashboard/improve.html', {
@@ -283,7 +283,7 @@ def analytics(request):
                 new, new2 = None, None
             elif credit >= 10: # Verify if the user have the credits
                 subtract_credits = helper.value_credits(request, 10) # we subtract the credits
-                new, new2 = helper.improve_title(df)
+                new, new2 = helper.improve_title(df, request.POST['language'])
             else:
                 error = "You don't have enough credits"
                 new, new2 = None, None
