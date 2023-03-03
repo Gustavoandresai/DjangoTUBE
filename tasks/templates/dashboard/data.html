@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+    Hey, {{ user.first_name|capfirst }}, here you go all your data
+</h2>
+
+<form action="/data/" method="POST">
+    {% csrf_token %}
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+
+            <select id="request" type="request" name="request" required
+                class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray">
+                {% for dato in search %}
+                <option>{{ dato.search }}, Results ({{ dato.search__count }}) </option>
+                {% endfor %}
+            </select>
+            
+        </label> <br> 
+        
+        <center>
+            <button
+                class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Get Info
+            </button>
+        </center>
+    </div>
+</form>
+<div>
+  <button style="float: right;"
+    @click="openModal"
+    class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple"
+  >
+    DELETE ALL
+  </button>
+  <div
+  x-show="isModalOpen"
+  x-transition:enter="transition ease-out duration-150"
+  x-transition:enter-start="opacity-0"
+  x-transition:enter-end="opacity-100"
+  x-transition:leave="transition ease-in duration-150"
+  x-transition:leave-start="opacity-100"
+  x-transition:leave-end="opacity-0"
+  class="fixed inset-0 z-30 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
+>
+  <!-- Modal -->
+  <div
+    x-show="isModalOpen"
+    x-transition:enter="transition ease-out duration-150"
+    x-transition:enter-start="opacity-0 transform translate-y-1/2"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0  transform translate-y-1/2"
+    @click.away="closeModal"
+    @keydown.escape="closeModal"
+    class="w-full px-6 py-4 overflow-hidden bg-white rounded-t-lg dark:bg-gray-800 sm:rounded-lg sm:m-4 sm:max-w-xl"
+    role="dialog"
+    id="modal"
+  >
+    <!-- Remove header if you don't want a close icon. Use modal body to place modal tile. -->
+    <header class="flex justify-end">
+      <button
+        class="inline-flex items-center justify-center w-6 h-6 text-gray-400 transition-colors duration-150 rounded dark:hover:text-gray-200 hover: hover:text-gray-700"
+        aria-label="close"
+        @click="closeModal"
+      >
+        <svg
+          class="w-4 h-4"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          role="img"
+          aria-hidden="true"
+        >
+          <path
+            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+            fill-rule="evenodd"
+          ></path>
+        </svg>
+      </button>
+    </header>
+    <!-- Modal body -->
+    <div class="mt-4 mb-6">
+      <!-- Modal title -->
+      <p
+        class="mb-2 text-lg font-semibold text-gray-700 dark:text-gray-300"
+      >
+        DELETE ALL 
+      </p>
+      <!-- Modal description -->
+      <p class="text-sm text-gray-700 dark:text-gray-400">
+        You are about to delete all data from your account. 
+        Are you sure?
+      </p>
+    </div>
+    <footer
+      class="flex flex-col items-center justify-end px-6 py-3 -mx-6 -mb-4 space-y-4 sm:space-y-0 sm:space-x-6 sm:flex-row bg-gray-50 dark:bg-gray-800"
+    >
+      <button
+        @click="closeModal"
+        class="w-full px-5 py-3 text-sm font-medium leading-5 text-white text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg dark:text-gray-400 sm:px-4 sm:py-2 sm:w-auto active:bg-transparent hover:border-gray-500 focus:border-gray-500 active:text-gray-500 focus:outline-none focus:shadow-outline-gray"
+      >
+        Cancel
+      </button>
+      <form method="post" action="/dashboard/">
+        {% csrf_token %}
+      <button
+        class="w-full px-5 py-3 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg sm:w-auto sm:px-4 sm:py-2 active:bg-purple-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-purple"
+      >
+        Delete
+      </button>
+    </form>
+    </footer>
+  </div>
+</div>
+</div> <br>
+<div>
+  <a href="{% url 'download-all-data' %}">
+<button style="float: right;" class="ml-auto flex items-right justify-between px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" >
+  <span>Download Dataframe</span>
+  <svg class="w-4 h-4 ml-2 -mr-1" fill="currentColor" aria-hidden="true" viewBox="0 0 20 20">
+    <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" fill-rule="evenodd"></path>
+  </svg>
+</button></a><br><br>
+</div>
+
+
+{% load tasks.filters %}
+{% for item in data %}
+<div class="flex items-start p-4 mb-8 text-sm font-semibold text-purple-100 bg-purple-600 rounded-lg shadow-md focus:outline-none focus:shadow-outline-purple">
+    <div class="flex items-center mr-4">
+        <a href="{{ item.thumbnail }}" target="_blank"><img src="{{ item.thumbnail }}" alt="{{ item.title }}" height="100" width="150"></a>
+    </div>
+    <div class="flex flex-col justify-start">
+        <div class="mb-2 font-bold">
+          <div class="text-center">
+            <span class="mr-2">{{ item.search }}</span>
+          </div><br>
+            <a href="{{ item.link }}" target="_blank"><span class="mr-2">{{ item.link }}</span></a>
+          
+        </div>
+        <div class="mb-2 font-bold">
+            Duration:
+            <span>{{ item.duration_seconds|durationformat }}</span>
+        </div>
+        <div class="flex mb-2">
+            <span class="mr-2">Title:</span>
+            <span class="mr-2 font-bold">{{ item.title }}</span>
+            <span class="mr-2">View count:</span>
+            <span>{{ item.view_count|intcomma }}</span>
+        </div>
+        <div class="mb-2">
+            <span>Upload date:</span>
+            <span class="ml-2 mr-4 font-bold">{{ item.upload_date|date:'d/m/Y' }}</span>
+            <span>Published time:</span>
+            <span class="ml-2 font-bold">{{ item.published_time }}</span>
+        </div>
+        <div class="mb-2 font-bold">Category: {{ item.category }}</div>
+        <div class="mb-2 font-bold description-summary" id="summary-{{ item.id }}">All video description: {{ item.all_video_description|truncatewords_html:20 }}
+            {% if item.all_video_description|wordcount > 20 %}
+            <div class="text-center"> <br>
+                <a class="view-more" data-id="{{ item.id }}">View more &RightArrow;</a>
+            </div>
+            {% endif %}
+        </div>
+        <div class="mb-2 font-bold hidden description-full" id="full-{{ item.id }}">All video description: {{ item.all_video_description }} <br> <br>
+            <div class="mb-2">Video Keywords : {{ item.keywords_tags }}</div>
+            <div class="mb-2">Channel: {{ item.channel }}</div>
+            <div class="mb-2">Subscribers: {{ item.subscribers }}</div>
+            <div class="mb-2">Channel description: {{ item.channel_description }}</div>
+            <div class="mb-2">Keywords channel: {{ item.keywords_channel }}</div>
+            <div class="mb-2">Channel total views: {{ item.channel_total_views|intcomma }}</div>
+            <div class="mb-2">Channel join: {{ item.channel_join }}</div>
+            <div class="mb-2">Country: {{ item.country }}</div>
+            <div class="text-center"> <br>
+                <a class="view-less" data-id="{{ item.id }}">View less &LeftArrow;</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% if pagination == True %}
+<!-- Pagination section -->
+{% if data.has_other_pages %}
+<div class="px-4 py-3 border-t dark:border-gray-700 bg-gray-50 text-gray-500 dark:text-gray-400 dark:bg-gray-800">
+  <div class="flex flex-col justify-between text-xs sm:flex-row text-gray-600 dark:text-gray-400">
+    <span class="flex items-center font-semibold tracking-wide uppercase">
+      Showing {{ data.number }}-{{ data.end_index }} of {{ data.paginator.count }} results
+      on {{ data.paginator.num_pages }} pages.
+  </span>
+    <div class="flex mt-2 sm:mt-auto sm:justify-end">
+      <nav aria-label="Table navigation">
+        <ul class="inline-flex items-center">
+          {% if data.has_previous %}
+          <li>
+            <a class="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none p-2 rounded-md text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent active:bg-transparent hover:bg-gray-100 focus:shadow-outline-gray dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10"
+              href="?page={{ data.previous_page_number }}" aria-label="Previous">
+              <svg class="h-3 w-3" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd" fill-rule="evenodd"></path>
+              </svg>
+            </a>
+          </li>
+          {% endif %}
+          {% for page in data.paginator.page_range %}
+          {% if page == data.number %}
+          <li>
+            <button
+              class="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-3 py-1 rounded-md text-xs text-white bg-purple-600 border border-transparent active:bg-purple-600 hover:bg-purple-700 focus:shadow-outline-purple"
+              type="button">{{ page }}</button>
+          </li>
+          {% else %}
+          <li>
+            <a
+              class="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-3 py-1 rounded-md text-xs text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent active:bg-transparent hover:bg-gray-100 focus:shadow-outline-gray dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10"
+              href="?page={{ page }}">{{ page }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {% if data.has_next %}
+            <li>
+              <a class="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none p-2 rounded-md text-gray-600 dark:text-gray-400 focus:outline-none border border-transparent active:bg-transparent hover:bg-gray-100 focus:shadow-outline-gray dark:hover:bg-gray-500 dark:hover:text-gray-300 dark:hover:bg-opacity-10"
+                href="?page={{ data.next_page_number }}" aria-label="Next">
+                <svg class="h-3 w-3" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd" fill-rule="evenodd"></path>
+                </svg>
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+
+{% endif %}
+
+
+
+</div>
+</main>
+</div>
+</div>
+<script>
+const viewMoreBtns = document.querySelectorAll(".view-more");
+const viewLessBtns = document.querySelectorAll(".view-less");
+
+viewMoreBtns.forEach(function(viewMoreBtn) {
+  const summaryId = viewMoreBtn.getAttribute("data-id");
+  const summary = document.querySelector(`#summary-${summaryId}`);
+  const full = document.querySelector(`#full-${summaryId}`);
+
+  viewMoreBtn.addEventListener("click", function() {
+    summary.classList.add("hidden");
+    full.classList.remove("hidden");
+  });
+});
+
+viewLessBtns.forEach(function(viewLessBtn) {
+  const fullId = viewLessBtn.getAttribute("data-id");
+  const summary = document.querySelector(`#summary-${fullId}`);
+  const full = document.querySelector(`#full-${fullId}`);
+
+  viewLessBtn.addEventListener("click", function() {
+    summary.classList.remove("hidden");
+    full.classList.add("hidden");
+  });
+});
+
+    
+      </script>
+    
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,28 @@
+# Archivos de Bytecode de Python
+__pycache__/
+*.pyc
+
+# Directorio de Entorno Virtual de Python
+venv/
+
+# Archivos de Registro de Django
+*.log
+
+# Archivos de Configuración de Django
+*.settings
+
+# Archivos de Base de Datos SQLite de Django
+*.db
+
+# Archivos generados por IDEs
+.idea/
+.vscode/
+
+# Otros archivos y directorios generados automáticamente
+node_modules/
+staticfiles/
+
+# Config
+config.py
+
+db.sqlite3
