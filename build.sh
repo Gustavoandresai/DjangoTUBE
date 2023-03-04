@@ -2,7 +2,7 @@
 # exit on error
 set -o errexit
 
-pip install requirements.txt
+pip install -r requirements.txt
 
 mv youtubesearchpython /usr/local/lib/python3.11/site-packages/
 
