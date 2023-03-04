@@ -5,12 +5,12 @@ import openai
 import pandas as pd
 from tasks.models import Credit
 from django.contrib.auth.models import User
-from tasks import config
+import os
 
 
 def title_improve(title, language):
     # Inicializa la API de OpenAI
-    openai.api_key = config.your_api_key
+    openai.api_key = os.environ.get('OPEN_KEY', default='your secret key')
     # Define los argumentos que deseas usar para la generación de texto
     prompt = (f"I want you to respond only in language {language}, Generate a title Improved and adapted to SEO marketing and inspired by the title: {title}."
               "Your answer would be a more creative, striking and attractive title than the original. The title should be different as it will be much better. the video title has to be  better and catchy no more than 70 characters.")
