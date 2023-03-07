@@ -175,13 +175,13 @@ class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800"
                 <div>
                   {% for key, value in item.items %}
                     {% if key == "Title" %}
-                      <p class="font-semibold">{{ value }}</p>
+                      <p class="font-semibold">{{ value|truncatewords_html:10 }}</p>
                     {% endif %}
                     {% if key == "Link" %}
                     <a href="{{ value }}" target="_blank"><p class="text-xs text-gray-600 dark:text-gray-400">{{ value }}</p></a>
                     {% endif %}
                     {% if key == "Description" %}
-                    <p class="text-xs text-gray-600 dark:text-gray-400">{{ value }}</p>
+                    <p class="text-xs text-gray-600 dark:text-gray-400">{{ value|truncatewords_html:10 }}</p>
                     {% endif %}
                   {% endfor %}
                 </div>
