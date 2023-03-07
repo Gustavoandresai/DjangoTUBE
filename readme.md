@@ -1,4 +1,5 @@
 # DjangoTUBE
+View live page: [view live](https://flowises.com/)
 
 This is a Django web application that allows you to search YouTube and extract public data such as views, title, description, upload date, channel name, channel views, thumbnail, and more data using the youtubesearchpython library. It also includes a title improvement functionality using GPT-3, as well as a data section where users can see all the searches they have made, download all the data in a CSV file, and delete all their searches and data if they wish. But this is just the beginning. What makes this project truly impressive is its ability to analyze data and present it in a visual and meaningful way to the user.
 
@@ -8,11 +9,6 @@ Main page
 ![screenshot](Screenshot_2.png)
 Login
 ![screenshot](Screenshot_1.png)
-Create account
-![screenshot](Screenshot_3.png)
-Dashboard
-![screenshot](Screenshot_4.png)
-
 
 ## Architecture
 
