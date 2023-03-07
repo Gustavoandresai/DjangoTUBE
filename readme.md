@@ -4,6 +4,16 @@ This is a Django web application that allows you to search YouTube and extract p
 
 I have integrated several charts and tables so that users can quickly see the results of their searches, and I have also added a title improvement functionality, which uses OpenAI's GPT-3 API to generate improved and inspired titles based on the most relevant titles found in the search.
 
+Main page
+![screenshot](Screenshot_2.png)
+Login
+![screenshot](Screenshot_1.png)
+Create account
+![screenshot](Screenshot_3.png)
+Dashboard
+![screenshot](Screenshot_4.png)
+
+
 ## Architecture
 
 The Django application follows a Model-View-Controller (MVC) architecture. The model defines the structure of the database and how data is stored. The view defines how information is displayed to the user. The controller handles user requests and sends the information to the corresponding model and view.
@@ -54,7 +64,9 @@ To test the application, follow these steps:
 - Data section: Users can see all the searches they have made and download all the data in a CSV file.
 - Data deletion: Users can delete all their searches and data if they wish.
 - Responsive design: It is designed to be responsive, meaning it adapts to different screen sizes, such as mobile devices and tablets.
-- User interface: Your project has an intuitive and easy-to-use user interface, with clearly defined buttons and forms for each function.
+- User interface: The project has an intuitive and easy-to-use user interface, with clearly defined buttons and forms for each function.
+- Credits: is a tool designed to limit abusive. Each time users utilize the tool, a pre-established amount of credits will be deducted. Credits are automatically recharged as users spend them. 
+
 
 ## License
 
